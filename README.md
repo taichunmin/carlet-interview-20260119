@@ -21,10 +21,25 @@ To install dependencies:
 bun install
 ```
 
+To copy and configure .env
+
+```
+cp .env.example .env
+```
+
 ## Run server
 
 ```sh
+docker compose up -d
 bun run dev
 ```
 
 open http://localhost:3000
+
+## drizzle-kit migration
+
+edit `./src/postgres/schema.ts` to add new schema, and run:
+
+```sh
+bun run drizzle-kit push
+```
