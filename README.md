@@ -1,8 +1,10 @@
 # carlet-interview-20260119
 
-## macOS Install
+## Install
 
-```bash
+To install bun (macOS):
+
+```sh
 # install bun macOS
 brew tap oven-sh/bun
 brew install bun
@@ -10,3 +12,19 @@ brew install bun
 # check version
 bun --version
 ```
+
+To install Docker:
+
+To install dependencies:
+
+```sh
+bun install
+```
+
+## Run server
+
+```sh
+bun run dev
+```
+
+open http://localhost:3000
