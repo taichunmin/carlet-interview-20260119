@@ -8,8 +8,9 @@
     "start": "bun run src/index.ts"
   },
   "devDependencies": {
+    "@types/lodash": "latest",
     "@types/bun": "latest",
-    "@types/pg": "^8.16.0",
+    "@types/pg": "latest",
     "add": "^2.0.6",
     "bun": "^1.3.6",
     "drizzle-kit": "^0.31.8"
