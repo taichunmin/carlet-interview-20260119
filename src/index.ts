@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { eq, and } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { logger } from 'hono/logger'
@@ -42,7 +42,7 @@ app.get('/slots', async c => {
   const args = validator.parse({ date: c.req.query('date') })
   const bookings = await db.select({ time: Booking.time }).from(Booking).where(eq(Booking.date, args.date))
   const res = {
-    available_times: _.difference(BOOKING_TIME_SLOT, _.map(bookings, 'time'))
+    available_times: _.difference(BOOKING_TIME_SLOT, _.map(bookings, booking => booking.time.slice(0, 5)))
   }
   return c.json(res)
 })
@@ -54,15 +54,12 @@ app.post('/bookings', async c => {
     time: z.enum(BOOKING_TIME_SLOT, { error: 'Shop closed' }),
   })
   const rawBody = await c.req.json()
-  console.log(rawBody)
   const args = validator.parse({
     ...rawBody,
     userId: rawBody.user_id,
   })
-  console.log(args)
 
   const user = await db.select({ id: User.id }).from(User).where(eq(User.id, args.userId))
-  console.log(user)
   if (_.isNil(user[0])) throw new HTTPException(400, { message: 'User not found' })
 
   const inserted = await db.transaction(async tx => {
